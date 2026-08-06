@@ -589,7 +589,7 @@ button { cursor: pointer; }
   padding-bottom: var(--space-7);
   border-bottom: 1px solid rgba(246, 241, 231, 0.14);
 }
-@media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
 
 .footer-brand .logo { color: var(--paper-200); margin-bottom: var(--space-3); }
@@ -1277,7 +1277,9 @@ select.input {
 @media (max-width: 900px) { .doc-layout { grid-template-columns: 1fr; } .toc { position: static; } }
 
 /* Contact tiles */
-.contact-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); }
+/* 180px rather than 220px so the four tiles pair up two-by-two in the narrower
+   left-hand column on desktop, instead of stacking into one tall strip. */
+.contact-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); }
 .contact-tile {
   display: grid;
   gap: var(--space-2);
@@ -1406,8 +1408,12 @@ select.input {
 /* Inline icon placeholders */
 [data-icon] { display: inline-flex; align-items: center; justify-content: center; flex: none; }
 
-/* Two-column blocks declared inline on sell / contact pages */
-@media (max-width: 860px) {
+/* Two-column blocks declared inline on sell / contact pages.
+   These collapse at 1024px — the same point the header switches to the burger.
+   Below that there is no longer room to split them: the enquiry form inside
+   .contact-grid was dropping to ~188px columns and the contact tiles were
+   being forced into a single narrow strip alongside it. */
+@media (max-width: 1024px) {
   .fee-grid, .contact-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
 }
 @media (max-width: 620px) {
