@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get in touch — upbss</title>
+<meta name="description" content="Contact upbss by phone, email or enquiry form. Every message reaches a named consultant and we reply within one working day.">
+<meta name="theme-color" content="#12233B">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>
+  /* Apply the stored theme before first paint so the page never flashes. */
+  try {
+    var t = localStorage.getItem('upbss-theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="nav">
+    <a class="logo" href="index.html" aria-label="upbss home">upbss<span class="dot">.</span></a>
+
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="buy.html">Buy A Property</a></li>
+        <li><a href="sell.html">Sell A Property</a></li>
+        <li><a href="sold.html">Recently Sold</a></li>
+        <li><a href="info-hub.html">Info Hub</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Get In Touch</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">
+        <span class="icon-moon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg></span>
+        <span class="icon-sun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+      </button>
+      <a class="btn btn-primary btn-sm" href="appraisal.html">Free Appraisal</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+        <span class="burger-box"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+    <ul>
+      <li><a href="buy.html">Buy A Property</a></li>
+      <li><a href="sell.html">Sell A Property</a></li>
+      <li><a href="sold.html">Recently Sold</a></li>
+      <li><a href="info-hub.html">Info Hub</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Get In Touch</a></li>
+      <li><a href="faqs.html">FAQs</a></li>
+    </ul>
+    <a class="btn btn-primary btn-block" href="appraisal.html">Free Appraisal</a>
+  </nav>
+</header>
+
+<main id="main">
+  <header class="page-header">
+    <div class="blueprint"></div>
+    <div class="wrap">
+      <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li aria-current="page">Get in touch</li>
+      </ol>
+      <p class="eyebrow on-dark">Get in touch</p>
+      <h1>Talk to a real consultant</h1>
+      <p>Every message reaches a named person, not a shared queue. We reply within one working day &mdash; usually the same one.</p>
+
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="panel on-panel">
+        <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;" class="contact-grid">
+          <div>
+            <p class="eyebrow on-dark">Submit an enquiry</p>
+            <h2 style="margin:12px 0 16px;">Buying, selling, or just weighing it up?</h2>
+            <p style="color:var(--panel-muted);max-width:40ch;">Tell us what you need and we will point you at the right person. If it is urgent, call &mdash; someone picks up during office hours.</p>
+
+            <div class="contact-tiles" style="margin-top:36px;">
+              <div class="contact-tile">
+                <h3>Email</h3>
+                <a href="mailto:hello@upbss.com">hello@upbss.com</a>
+              </div>
+              <div class="contact-tile">
+                <h3>Phone</h3>
+                <a href="tel:+43732000000">+43 732 000 000</a>
+              </div>
+              <div class="contact-tile">
+                <h3>Office</h3>
+                <p>upbss Property Group<br>Landstra&szlig;e 47<br>4020 Linz, Austria</p>
+              </div>
+              <div class="contact-tile">
+                <h3>Opening hours</h3>
+                <p>Mon&ndash;Fri 09:00&ndash;18:00<br>Sat 10:00&ndash;14:00</p>
+              </div>
+            </div>
+          </div>
+
+          <form id="enquiryForm" data-validate style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-content:start;">
+            <div class="field">
+              <label class="field-label" for="cName">Full name<span class="req">*</span></label>
+              <input class="input" id="cName" name="name" type="text" autocomplete="name" required data-label="Full name">
+              <p class="field-error"></p>
+            </div>
+            <div class="field">
+              <label class="field-label" for="cEmail">Email<span class="req">*</span></label>
+              <input class="input" id="cEmail" name="email" type="email" autocomplete="email" required data-label="Email">
+              <p class="field-error"></p>
+            </div>
+            <div class="field">
+              <label class="field-label" for="cPhone">Phone</label>
+              <input class="input" id="cPhone" name="phone" type="tel" autocomplete="tel" placeholder="+43 &hellip;">
+              <p class="field-error"></p>
+            </div>
+            <div class="field">
+              <label class="field-label" for="cType">Type of request<span class="req">*</span></label>
+              <select class="input" id="cType" name="interest" required data-label="Type of request">
+                <option value="">Select&hellip;</option>
+                <option>Selling a property</option>
+                <option>Buying a property</option>
+                <option>Booking a viewing</option>
+                <option>Finance question</option>
+                <option>Something else</option>
+              </select>
+              <p class="field-error"></p>
+            </div>
+            <div class="field" style="grid-column:1/-1;">
+              <label class="field-label" for="cMessage">How can we help?<span class="req">*</span></label>
+              <textarea class="input" id="cMessage" name="message" rows="5" required data-label="Message" placeholder="A sentence or two is plenty &mdash; address, reference number or what you are looking for."></textarea>
+              <p class="field-error"></p>
+            </div>
+            <label class="checkbox" style="grid-column:1/-1;">
+              <input type="checkbox" id="cConsent" name="consent" required data-label="Consent">
+              <span>I have read the <a href="privacy-policy.html" style="color:var(--amber-300);text-decoration:underline;">privacy policy</a> and agree to upbss contacting me about this enquiry.</span>
+              <p class="field-error"></p>
+            </label>
+            <p class="form-status" style="grid-column:1/-1;" tabindex="-1"></p>
+            <p class="form-note" style="grid-column:1/-1;">This form is front-end only in this build. Point <code>FORM_ENDPOINT</code> in <code>assets/js/main.js</code> at your PHP handler to write enquiries to MS SQL.</p>
+            <button class="btn btn-primary" type="submit" style="grid-column:1/-1;">Send enquiry</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="feature-icon"><i data-icon="euro" data-icon-size="24"></i></div>
+          <h3>Want a number first?</h3>
+          <p>The instant appraisal gives you an indicative range in under a minute, before you speak to anyone.</p>
+          <p><a class="link-arrow" href="appraisal.html">Value my property<i data-icon="arrow" data-icon-size="16"></i></a></p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i data-icon="search" data-icon-size="24"></i></div>
+          <h3>Looking to buy?</h3>
+          <p>Register what you are after and we will call when something matching comes onto our books.</p>
+          <p><a class="link-arrow" href="buy.html">Browse listings<i data-icon="arrow" data-icon-size="16"></i></a></p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i data-icon="doc" data-icon-size="24"></i></div>
+          <h3>Something went wrong?</h3>
+          <p>If we have let you down, our complaints procedure sets out exactly how we handle it and by when.</p>
+          <p><a class="link-arrow" href="complaints-procedure.html">Complaints procedure<i data-icon="arrow" data-icon-size="16"></i></a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="index.html">upbss<span class="dot">.</span></a>
+        <p>A direct, transparent way to buy and sell property. Real consultants, honest valuations, and one fee you can see before you sign.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="buy.html">Buy A Property</a></li>
+          <li><a href="sell.html">Sell A Property</a></li>
+          <li><a href="sold.html">Recently Sold</a></li>
+          <li><a href="info-hub.html">Info Hub</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Get In Touch</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+          <li><a href="cookie-policy.html">Cookie Policy</a></li>
+          <li><a href="complaints-procedure.html">Complaints Procedure</a></li>
+          <li><a href="accessibility-policy.html">Accessibility Policy</a></li>
+          <li><a href="faqs.html">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Talk to us</h4>
+        <ul>
+          <li><a href="mailto:hello@upbss.com">hello@upbss.com</a></li>
+          <li><a href="tel:+43732000000">+43 732 000 000</a></li>
+          <li><a href="contact.html">Contact form</a></li>
+          <li><a href="appraisal.html">Free appraisal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span data-year>2026</span> upbss Property Group. Registered in Austria. All rights reserved.</p>
+      <div class="socials">
+        <a href="#" aria-label="upbss on Facebook"><i data-icon="facebook" data-icon-size="17"></i></a>
+        <a href="#" aria-label="upbss on Instagram"><i data-icon="instagram" data-icon-size="17"></i></a>
+        <a href="#" aria-label="upbss on LinkedIn"><i data-icon="linkedin" data-icon-size="17"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>

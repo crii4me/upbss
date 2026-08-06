@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>upbss — Buy a property. Sell a property.</title>
+<meta name="description" content="upbss connects property buyers and sellers directly. Search listings, request a free appraisal, and sell without the stress.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="nav">
+    <a href="#top" class="logo">upbss<span class="dot">.</span></a>
+    <nav class="nav-links">
+      <a href="#listings">Buy A Property</a>
+      <a href="#enquiry">Sell A Property</a>
+      <a href="#story">About Us</a>
+      <a href="#faq">FAQs</a>
+      <a href="#enquiry">Get In Touch</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#enquiry" class="btn btn-amber">Free Appraisal</a>
+      <button class="burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#listings">Buy A Property</a>
+    <a href="#enquiry">Sell A Property</a>
+    <a href="#story">About Us</a>
+    <a href="#faq">FAQs</a>
+    <a href="#enquiry">Get In Touch</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Property, sorted directly</p>
+          <h1>Selling a property doesn't need to be complicated.</h1>
+          <p>upbss connects buyers and sellers directly, so listings move fast, enquiries reach real people, and you stay in control from first search to signed deal.</p>
+          <div class="hero-actions">
+            <a href="#enquiry" class="btn btn-amber">Get My Free Appraisal</a>
+            <a href="#listings" class="btn btn-outline">Browse Listings</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="blueprint-grid"></div>
+          <svg viewBox="0 0 400 300" preserveAspectRatio="none">
+            <polyline points="60,230 60,120 200,60 340,120 340,230" fill="none" stroke="#F6F1E7" stroke-opacity="0.55" stroke-width="2"/>
+            <polyline points="60,230 340,230" fill="none" stroke="#E29B3E" stroke-opacity="0.85" stroke-width="2"/>
+            <rect x="150" y="160" width="40" height="70" fill="none" stroke="#F6F1E7" stroke-opacity="0.55" stroke-width="2"/>
+            <rect x="90" y="150" width="30" height="30" fill="none" stroke="#F6F1E7" stroke-opacity="0.4" stroke-width="1.5"/>
+            <rect x="280" y="150" width="30" height="30" fill="none" stroke="#F6F1E7" stroke-opacity="0.4" stroke-width="1.5"/>
+          </svg>
+          <span class="tag">Live plan · Ref 2291</span>
+          <span class="price-chip">€ 349,000</span>
+        </div>
+      </div>
+
+      <div class="search-card">
+        <div class="field">
+          <label for="propType">Property Type</label>
+          <select id="propType">
+            <option value="">Any type</option>
+            <option>Apartment</option>
+            <option>House</option>
+            <option>Studio</option>
+            <option>Commercial</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="propLoc">Location</label>
+          <input id="propLoc" type="text" placeholder="Town, district or postcode">
+        </div>
+        <button class="btn btn-amber" id="searchBtn">Search Listings</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="trust">
+    <div class="wrap">
+      <p class="eyebrow">Why trust upbss</p>
+      <h2>Let our clients tell you why</h2>
+      <div class="carousel">
+        <button class="car-btn prev" id="carPrev" aria-label="Previous testimonial">&#8249;</button>
+        <div id="carContent">
+          <blockquote id="carQuote">"Excellent from start to finish. Our sales consultant kept us updated at every stage and found a buyer within three weeks."</blockquote>
+          <cite id="carAuthor">Marta &amp; Jonas Weber <span>— Sellers, Linz</span></cite>
+        </div>
+        <button class="car-btn next" id="carNext" aria-label="Next testimonial">&#8250;</button>
+        <div class="dots" id="carDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTINGS -->
+  <section id="listings">
+    <div class="wrap">
+      <div class="listings-head">
+        <div>
+          <p class="eyebrow">Current listings</p>
+          <h2>Search available properties</h2>
+        </div>
+        <div class="filter-bar">
+          <select id="filterType">
+            <option value="">All types</option>
+            <option>Apartment</option>
+            <option>House</option>
+            <option>Studio</option>
+            <option>Commercial</option>
+          </select>
+          <input id="filterLoc" type="text" placeholder="Filter by location…">
+        </div>
+      </div>
+      <div class="listing-grid" id="listingGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none;">No properties match that search yet. Try a different type or location.</div>
+    </div>
+  </section>
+
+  <!-- ENQUIRY -->
+  <section>
+    <div class="enquiry" id="enquiry">
+      <div class="enquiry-intro">
+        <p class="eyebrow on-dark">Submit an enquiry</p>
+        <h2>Buying, selling, or just curious? Tell us what you need.</h2>
+        <p>Every enquiry reaches a real consultant, not a queue. We'll come back to you within one working day.</p>
+        <div class="contact-line">
+          <span>hello@upbss.com</span>
+          <span>+43 732 000 000</span>
+        </div>
+      </div>
+      <form class="enquiry-form" id="enquiryForm" novalidate>
+        <div class="field-wrap">
+          <label for="fName">Full name</label>
+          <input id="fName" name="name" type="text" placeholder="Your name" required>
+        </div>
+        <div class="field-wrap">
+          <label for="fEmail">Email</label>
+          <input id="fEmail" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field-wrap">
+          <label for="fPhone">Phone</label>
+          <input id="fPhone" name="phone" type="tel" placeholder="+43 …">
+        </div>
+        <div class="field-wrap">
+          <label for="fInterest">I'm interested in</label>
+          <select id="fInterest" name="interest">
+            <option>Buying a property</option>
+            <option>Selling a property</option>
+            <option>General question</option>
+          </select>
+        </div>
+        <div class="field-wrap full">
+          <label for="fMessage">Message</label>
+          <textarea id="fMessage" name="message" rows="4" placeholder="Tell us a little about what you're looking for…" required></textarea>
+        </div>
+        <p class="form-note">This form is front-end only for now — connect it to your PHP / MS SQL enquiry endpoint to go live.</p>
+        <div class="form-msg" id="formMsg">Thanks — your enquiry has been captured. A consultant will be in touch shortly.</div>
+        <button type="submit" class="btn btn-amber full">Send Enquiry</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="faq-panel">
+        <h2>Frequently Asked Questions</h2>
+        <div id="faqList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section id="story">
+    <div class="wrap">
+      <div class="story">
+        <div class="story-copy">
+          <p class="eyebrow">Our story so far</p>
+          <h2>Built by people who've sat on both sides of the table.</h2>
+          <p>upbss started as a simple idea: property enquiries shouldn't disappear into a call centre. We connect buyers and sellers directly, back every listing with a real consultant, and keep the process visible from search to signature.</p>
+          <a href="#enquiry" class="btn btn-navy" style="align-self:flex-start;">Find Out More</a>
+        </div>
+        <div class="story-visual">
+          <div class="blueprint-grid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <p class="eyebrow">Free appraisal · No sale, no fee</p>
+    <h2>Selling your property shouldn't be a stress.</h2>
+    <p>Get a clear, no-obligation valuation from a local consultant.</p>
+    <a href="#enquiry" class="btn btn-amber">Get My Free Appraisal</a>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#top" class="logo">upbss<span class="dot" style="color:var(--amber);">.</span></a>
+        <p>A direct, transparent way to buy and sell property — built for people, not funnels.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#listings">Buy A Property</a></li>
+          <li><a href="#enquiry">Sell A Property</a></li>
+          <li><a href="#story">About Us</a></li>
+          <li><a href="#faq">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms and Conditions</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Complaints Procedure</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Talk To Us</h4>
+        <ul>
+          <li><a href="mailto:hello@upbss.com">hello@upbss.com</a></li>
+          <li><a href="tel:+43732000000">+43 732 000 000</a></li>
+          <li><a href="#enquiry">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 upbss. All rights reserved.</span>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">i</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

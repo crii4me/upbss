@@ -1,0 +1,12 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Byte-identical archive of main_files/ — the folder itself is tracked,
+# so committing the zip as well would just duplicate it in history.
+main_files.zip
+
+# Local Claude Code settings (machine-specific paths, not shared config).
+# Leading **/ so this matches at any depth, not just the repo root.
+**/.claude/settings.local.json

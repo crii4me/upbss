@@ -1,0 +1,16 @@
+# Store text files with LF in the repository regardless of the platform they
+# were authored on. These files came off a Mac originally; without this, Git on
+# Windows would rewrite every line ending and the first commit would look like
+# a full-file change to anyone on another machine.
+* text=auto eol=lf
+
+# Binary assets — never line-ending-convert or diff these as text.
+*.zip   binary
+*.docx  binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
