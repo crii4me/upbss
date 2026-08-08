@@ -82,7 +82,12 @@
     grid.innerHTML = UP.guides.slice(0, limit).map(function (g, i) {
       return '' +
         '<article class="guide-card">' +
-          '<div class="guide-media">' + UP.propertyScene(['tower', 'house', 'loft', 'terrace', 'shop', 'land'][i % 6], i + 2) + '</div>' +
+          '<div class="guide-media">' +
+            (g.image
+              ? UP.propertyImage('guides/' + g.image, g.title,
+                  { sizes: '(max-width: 680px) 100vw, (max-width: 1024px) 50vw, 33vw' })
+              : UP.propertyScene(['tower', 'house', 'loft', 'terrace', 'shop', 'land'][i % 6], i + 2)) +
+          '</div>' +
           '<div class="guide-body">' +
             '<p class="guide-meta">' + u.escape(g.cat) + ' · ' + g.read + ' min read · ' + u.escape(g.date) + '</p>' +
             '<h3><a href="guide.html?slug=' + encodeURIComponent(g.slug) + '">' + u.escape(g.title) + '</a></h3>' +

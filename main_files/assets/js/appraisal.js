@@ -28,7 +28,7 @@
     var locSel = document.getElementById('aLocation');
     locSel.innerHTML = '<option value="">Select a location…</option>' +
       UP.locations.slice().sort().map(function (l) { return '<option>' + l + '</option>'; }).join('') +
-      '<option value="__other">Somewhere else in Austria</option>';
+      '<option value="__other">Somewhere else in Scotland</option>';
 
     function showStep(i) {
       current = i;
@@ -80,8 +80,33 @@
 
       document.getElementById('resultFigure').textContent = u.money(low) + ' – ' + u.money(high);
       document.getElementById('resultSummary').textContent =
-        area + ' m² ' + type.toLowerCase() + ' in ' + (loc === '__other' ? 'Austria' : loc) +
+        area + ' m² ' + type.toLowerCase() + ' in ' + (loc === '__other' ? 'Scotland' : loc) +
         ', ' + condition + ' condition, built ' + year + '.';
+
+      /* Send the lead, along with the figure we actually showed them, so a
+         follow-up call can reference the same number the visitor saw.
+         Deliberately fire-and-forget: the visitor came for the estimate, and
+         a network problem should not stop them seeing it. Failures are logged
+         rather than shown. */
+      if (UP.formConfigured()) {
+        UP.submitLead({
+          name: document.getElementById('aName').value.trim(),
+          email: document.getElementById('aEmail').value.trim(),
+          phone: document.getElementById('aPhone').value.trim(),
+          interest: 'Instant appraisal',
+          property_type: type,
+          location: loc === '__other' ? 'Elsewhere in Scotland' : loc,
+          area_sqm: area,
+          condition: condition,
+          year_built: year,
+          estimate_low: low,
+          estimate_high: high,
+          estimate_shown: u.money(low) + ' – ' + u.money(high),
+          consent: !!document.getElementById('aConsent').checked
+        }, { subject: 'upbss — instant appraisal lead' }).then(function (ok) {
+          if (ok === false) console.warn('upbss: appraisal lead was not delivered.');
+        });
+      }
 
       /* Extreme or unsupported inputs get routed to a human instead. */
       var unusual = area < 15 || area > 2000 || loc === '__other';

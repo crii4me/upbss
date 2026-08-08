@@ -81,38 +81,69 @@
   <section class="section">
     <div class="wrap">
       <div class="form-status error is-visible" style="max-width:72ch;margin-bottom:32px;">
-        <span><strong>Draft template.</strong> This policy is written as a working starting point for the upbss build. Have it reviewed by a qualified lawyer, and check it against your actual data processing, before the site goes live.</span>
+        <span><strong>Draft template.</strong> This describes the site as currently built and is based on self-assessment only. No independent accessibility audit and no assistive-technology testing have been carried out. Do not strengthen the claims below without evidence &mdash; a statement claiming full compliance without testing is worse than one that is honest about its gaps.</span>
       </div>
       <div class="doc-layout">
         <nav class="toc" aria-label="On this page">
           <h4>On this page</h4>
           <ul>
-            <li><a href="#standard">The standard we aim for</a></li>
+            <li><a href="#standard">The legal position</a></li>
             <li><a href="#done">What is in place</a></li>
             <li><a href="#known">Known limitations</a></li>
-            <li><a href="#contact">Contact us about accessibility</a></li>
+            <li><a href="#formats">Alternative formats</a></li>
+            <li><a href="#contact">Telling us about a problem</a></li>
+            <li><a href="#plan">Our plan</a></li>
           </ul>
-          <p class="guide-meta" style="margin-top:20px;">Last updated 1 July 2026</p>
+          <p class="guide-meta" style="margin-top:20px;">Last updated 8 August 2026</p>
         </nav>
         <div class="prose">
-          <h2 id="standard">The standard we aim for</h2>
-          <p>We aim to meet WCAG 2.2 Level AA. Accessibility is treated as part of building a page, not as a later audit.</p>
+          <h2 id="standard">The legal position</h2>
+          <p>We are a private-sector business. The <strong>Public Sector Bodies (Websites and Mobile Applications) Accessibility Regulations 2018</strong> apply to public sector organisations and therefore do not apply to us.</p>
+          <p>The <strong>Equality Act 2010</strong> does apply, and extends to Scotland. As a provider of services to the public we have a duty to make <strong>reasonable adjustments</strong> so that disabled people are not put at a substantial disadvantage. That duty is anticipatory: it exists in advance, and is not triggered by a complaint.</p>
+          <p>We therefore <strong>aim</strong> to meet <strong>WCAG 2.2 Level AA</strong> as the recognised benchmark, and treat any failure to do so as a defect to be fixed. Accessibility is treated as part of building a page, not as a later audit.</p>
+          <p>One Scotland-specific point worth knowing: the Home Report Single Survey includes an accessibility audit of the property itself. That is a statutory feature of selling here, separate from the accessibility of this website, but it means buyers in Scotland expect accessibility information as standard.</p>
           <h2 id="done">What is in place</h2>
+          <p>The following are built in deliberately and confirmed by inspection of the code:</p>
           <ul>
-            <li>Text and background colours meet the AA contrast minimum in both the light and dark themes</li>
-            <li>Every interactive control is reachable and operable with a keyboard, with a visible focus ring</li>
-            <li>A skip link jumps straight to the main content</li>
-            <li>Form fields have permanent visible labels; errors appear next to the field they belong to</li>
-            <li>Icons are decorative and hidden from assistive technology; icon-only buttons carry an accessible name</li>
-            <li>Animation is reduced or removed when your system requests reduced motion</li>
-            <li>Headings follow a logical order and the page works at 200% zoom without horizontal scrolling</li>
+            <li>A skip link on every page, jumping straight to the main content</li>
+            <li>Every interactive control is reachable and operable with a keyboard, with a visible focus indicator</li>
+            <li>Form fields have permanently visible labels &mdash; not placeholder text used as a label &mdash; and errors appear next to the field they belong to, in text, with a recovery hint rather than just a red border</li>
+            <li>Native browser validation bubbles are suppressed so every error is reported the same way</li>
+            <li>Decorative icons and the generated property illustrations are hidden from assistive technology</li>
+            <li>Icon-only buttons carry an accessible name</li>
+            <li>Animation is reduced or removed when your system requests reduced motion, including the auto-advancing testimonial carousel, which stops entirely</li>
+            <li>The carousel also pauses on hover and on keyboard focus, and announces changes through a live region</li>
+            <li>Headings follow a logical order and pages use landmark elements</li>
+            <li>Colour is not used as the only means of conveying information</li>
+            <li>Both a light and a dark theme are provided, and your choice is remembered</li>
+            <li>Layouts reflow without horizontal scrolling down to a 375 pixel wide screen, verified by measurement across every main page</li>
           </ul>
           <h2 id="known">Known limitations</h2>
-          <p>The property artwork is generated illustration rather than photography and is marked decorative, so screen readers skip it &mdash; the written description carries the same information. If you find something that does not work with your assistive technology, please tell us; that report is the most useful thing we can get.</p>
-          <h2 id="contact">Contact us about accessibility</h2>
-          <p>Email <a href="mailto:hello@upbss.com">hello@upbss.com</a> with the page address and what went wrong. We aim to respond within five working days and to fix confirmed issues in the next release.</p>
+          <p>We would rather list these than pretend they do not exist:</p>
+          <ul>
+            <li><strong>No independent audit has been carried out.</strong> Everything above is self-assessed.</li>
+            <li><strong>No testing with screen readers</strong> or other assistive technology has yet been done. Assessment so far has been code inspection and automated measurement only.</li>
+            <li><strong>Colour contrast has not been formally measured</strong> against the WCAG AA thresholds in either theme. It was designed with contrast in mind, but designed-for is not measured.</li>
+            <li><strong>Text resizing and 200% zoom have not been formally verified</strong> for every page.</li>
+            <li>Property images are generated illustrations rather than photography, and are marked decorative. The written description carries the same information, but a visitor relying on images will get less from a listing than a sighted visitor.</li>
+            <li>PDF documents we publish may not be fully tagged for screen readers. Ask us and we will provide the content in another format.</li>
+            <li>Third-party content such as portal feeds or embedded maps may not meet the same standard once added.</li>
+          </ul>
+          <h2 id="formats">Alternative formats</h2>
+          <p>If you need anything on this site &mdash; a listing, a document or a form &mdash; in large print, plain text, audio or any other accessible format, contact us and we will provide it. There is no charge. If completing a form online is difficult, telephone us and a consultant will complete it with you.</p>
+          <h2 id="contact">Telling us about a problem</h2>
+          <p>Email <a href="mailto:zoha3652@gmail.com">zoha3652@gmail.com</a> with the page address and what went wrong. That report is the most useful thing we can receive. We aim to respond within <strong>five working days</strong> and to fix confirmed issues in the next release. Where a fix will take longer we will tell you, and offer another way to get what you need meanwhile.</p>
+          <p>If you are unhappy with our response, please use our <a href="complaints-procedure.html">complaints procedure</a>. If you believe we have failed in our duty to make reasonable adjustments under the Equality Act 2010, you can contact the <strong>Equality Advisory and Support Service</strong>, which provides free advice to individuals in England, Scotland and Wales.</p>
+          <h2 id="plan">Our plan</h2>
+          <ol>
+            <li>Measure colour contrast across both themes and correct any pair below the AA threshold.</li>
+            <li>Test the main journeys &mdash; search, listing, enquiry, appraisal &mdash; with at least one screen reader.</li>
+            <li>Verify behaviour at 200% zoom and at 400% reflow.</li>
+            <li>Add real alternative text once photography replaces the generated illustrations.</li>
+            <li>Commission an independent audit before any public launch.</li>
+          </ol>
           <hr>
-          <p>Questions about this document? Email <a href="mailto:hello@upbss.com">hello@upbss.com</a> or write to upbss Property Group, Landstra&szlig;e 47, 4020 Linz, Austria.</p>
+          <p>Questions about this document? Email <a href="mailto:zoha3652@gmail.com">zoha3652@gmail.com</a> or write to upbss Property Group, <strong>[registered office address]</strong>, Edinburgh.</p>
         </div>
       </div>
     </div>
@@ -151,15 +182,15 @@
       <div class="footer-col">
         <h4>Talk to us</h4>
         <ul>
-          <li><a href="mailto:hello@upbss.com">hello@upbss.com</a></li>
-          <li><a href="tel:+43732000000">+43 732 000 000</a></li>
+          <li><a href="mailto:zoha3652@gmail.com">zoha3652@gmail.com</a></li>
+          <li><a href="tel:+447958145889">+44 7958 145889</a></li>
           <li><a href="contact.html">Contact form</a></li>
           <li><a href="appraisal.html">Free appraisal</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; <span data-year>2026</span> upbss Property Group. Registered in Austria. All rights reserved.</p>
+      <p>&copy; <span data-year>2026</span> upbss Property Group. Registered in Scotland. All rights reserved.</p>
       <div class="socials">
         <a href="#" aria-label="upbss on Facebook"><i data-icon="facebook" data-icon-size="17"></i></a>
         <a href="#" aria-label="upbss on Instagram"><i data-icon="instagram" data-icon-size="17"></i></a>

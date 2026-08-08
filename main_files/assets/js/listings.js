@@ -21,7 +21,10 @@
     return '' +
       '<article class="property-card">' +
         '<div class="card-media">' +
-          UP.propertyScene(p.scene, p.seed) +
+          (p.images && p.images.length
+            ? UP.propertyImage('properties/' + p.images[0], p.title + ', ' + p.location,
+                { sizes: '(max-width: 680px) 100vw, (max-width: 1024px) 50vw, 33vw' })
+            : UP.propertyScene(p.scene, p.seed)) +
           '<span class="badge ' + u.statusClass(p.status) + '">' + u.statusLabel(p.status) + '</span>' +
           '<span class="ref">' + u.escape(p.ref) + '</span>' +
         '</div>' +
@@ -33,7 +36,7 @@
             specs.map(function (s) { return '<span>' + UP.icon(s[0], 15) + s[1] + '</span>'; }).join('') +
           '</div>' +
           '<div class="card-foot">' +
-            '<p class="price">' + u.money(p.price) + '<small>' + Math.round(p.price / p.area).toLocaleString('de-AT') + ' € / m²</small></p>' +
+            '<p class="price">' + u.money(p.price) + '<small>£' + Math.round(p.price / p.area).toLocaleString('en-GB') + ' / m²</small></p>' +
             '<a class="link-arrow" href="property.html?ref=' + encodeURIComponent(p.ref) + '">' +
               'View' + UP.icon('arrow', 16) + '<span class="sr-only"> ' + u.escape(p.title) + '</span></a>' +
           '</div>' +

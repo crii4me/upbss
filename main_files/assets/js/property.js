@@ -20,13 +20,26 @@
   }
 
   function scenesFor(p) {
-    /* Three deterministic views of the same property so the gallery has depth. */
+    /* Three views so the gallery has depth. Photographs where the listing has
+       them, generated artwork for any slot that does not — so a part-
+       photographed listing still fills the layout rather than showing gaps. */
     var alt = { house: 'terrace', tower: 'loft', loft: 'tower', shop: 'terrace', terrace: 'tower', land: 'house' };
-    return [
+    var fallback = [
       UP.propertyScene(p.scene, p.seed),
       UP.propertyScene(alt[p.scene] || 'tower', p.seed + 4),
       UP.propertyScene(p.scene, p.seed + 9)
     ];
+    if (!p.images || !p.images.length) return fallback;
+
+    return [0, 1, 2].map(function (i) {
+      if (!p.images[i]) return fallback[i];
+      return UP.propertyImage('properties/' + p.images[i],
+        i === 0 ? p.title + ', ' + p.location : p.title + ', view ' + (i + 1),
+        {
+          sizes: i === 0 ? '(max-width: 860px) 100vw, 60vw' : '(max-width: 860px) 50vw, 22vw',
+          eager: i === 0
+        });
+    });
   }
 
   function render(p, root) {
@@ -85,8 +98,8 @@
               '<h2>About this property</h2>' +
               '<p class="lead" style="margin-top:16px;">' + u.escape(p.summary) + '</p>' +
               '<p class="muted" style="margin-top:16px;max-width:70ch;">' +
-                'Viewings are arranged directly with your named consultant. Ask us for the full document pack — ' +
-                'land register extract, floor plans and the energy certificate — before you make an offer.' +
+                'Viewings are arranged directly with your named consultant. Ask us for the Home Report — ' +
+                'Single Survey, Energy Report and Property Questionnaire — before you make an offer.' +
               '</p>' +
             '</section>' +
 
@@ -128,7 +141,7 @@
                   '<input class="input" id="vEmail" name="email" type="email" autocomplete="email" required data-label="Email">' +
                   '<p class="field-error"></p></div>' +
                 '<div class="field"><label class="field-label" for="vPhone">Phone</label>' +
-                  '<input class="input" id="vPhone" name="phone" type="tel" autocomplete="tel" placeholder="+43 …">' +
+                  '<input class="input" id="vPhone" name="phone" type="tel" autocomplete="tel" placeholder="0131 …">' +
                   '<p class="field-error"></p></div>' +
                 '<div class="field"><label class="field-label" for="vMsg">Message</label>' +
                   '<textarea class="input" id="vMsg" name="message" rows="3" ' +

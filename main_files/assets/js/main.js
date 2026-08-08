@@ -16,16 +16,16 @@
     money: function (n, opts) {
       if (n === null || n === undefined || n === '') return 'POA';
       var o = opts || {};
-      return new Intl.NumberFormat('de-AT', {
+      return new Intl.NumberFormat('en-GB', {
         style: 'currency',
-        currency: 'EUR',
+        currency: 'GBP',
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       }).format(o.round ? Math.round(n / 1000) * 1000 : n);
     },
 
     number: function (n) {
-      return new Intl.NumberFormat('de-AT').format(n);
+      return new Intl.NumberFormat('en-GB').format(n);
     },
 
     slug: function (s) {
@@ -101,11 +101,32 @@
       'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + d + '</svg>';
   };
 
-  /* Fill <div data-scene="house" data-seed="3"> with generated artwork. */
+  /* Build a responsive <img> for any of the artwork containers.
+     `stem` is a path without the width suffix, e.g. 'properties/UP2291'.
+     Everything on the site routes through here so srcset, lazy loading and
+     alt text are handled once rather than in four separate renderers. */
+  UP.propertyImage = function (stem, alt, opts) {
+    var o = opts || {};
+    var base = 'assets/img/' + stem;
+    return '<img src="' + base + '-800.webp"' +
+      ' srcset="' + base + '-800.webp 800w, ' + base + '-1400.webp 1400w"' +
+      ' sizes="' + (o.sizes || '(max-width: 680px) 100vw, 33vw') + '"' +
+      ' alt="' + UP.util.escape(alt || '') + '"' +
+      ' loading="' + (o.eager ? 'eager' : 'lazy') + '" decoding="async">';
+  };
+
+  /* Fill <div data-scene="house" data-seed="3"> with generated artwork, or
+     <div data-image="scenes/hero" data-image-alt="..."> with a photograph. */
   function hydrateScenes(root) {
-    (root || document).querySelectorAll('[data-scene]').forEach(function (el) {
+    (root || document).querySelectorAll('[data-scene], [data-image]').forEach(function (el) {
       if (el.dataset.sceneDone) return;
-      el.insertAdjacentHTML('afterbegin', UP.propertyScene(el.dataset.scene, Number(el.dataset.seed) || 1));
+      var html = el.dataset.image
+        ? UP.propertyImage(el.dataset.image, el.dataset.imageAlt || '', {
+            sizes: '(max-width: 960px) 100vw, 50vw',
+            eager: el.hasAttribute('data-eager')
+          })
+        : UP.propertyScene(el.dataset.scene, Number(el.dataset.seed) || 1);
+      el.insertAdjacentHTML('afterbegin', html);
       el.dataset.sceneDone = '1';
     });
   }
@@ -402,10 +423,94 @@
   }
 
   /* ---------- Forms ------------------------------------------------------- */
-  /* Client-side validation + a simulated submit. Point FORM_ENDPOINT at the
-     PHP handler that writes to MS SQL and swap the setTimeout for fetch(). */
+  /* Client-side validation plus a real submit.
 
-  var FORM_ENDPOINT = null; /* e.g. '/api/enquiry.php' */
+     ============================================================
+     TO MAKE THE FORMS ACTUALLY EMAIL YOU: fill in FORM.key below.
+     ============================================================
+
+     Until a key is present every form falls back to the old simulated
+     success, so the demo keeps working and nothing breaks half-configured.
+
+     An access key here is meant to be public — it only lets a visitor submit
+     to your own form. Never put a real email API key (SendGrid, Mailgun,
+     Resend) in front-end code: anyone reading the page source could then
+     send mail as you. */
+
+  var FORM = {
+    provider: 'web3forms',      /* 'web3forms' | 'formspree' | 'custom' */
+    key: '9bffaae2-619e-42c5-b4c4-c9f49241500c', /* Web3Forms access key */
+    endpoint: '',               /* only used when provider is 'custom' */
+    destination: 'zoha3652@gmail.com' /* for your reference — the provider holds the real address */
+  };
+
+  function formEndpoint() {
+    if (FORM.provider === 'web3forms') return FORM.key ? 'https://api.web3forms.com/submit' : null;
+    if (FORM.provider === 'formspree') return FORM.key ? 'https://formspree.io/f/' + FORM.key : null;
+    return FORM.endpoint || null;
+  }
+
+  /* True once a key is in place. Callers use this to decide whether to send
+     for real or fall back to the simulation. */
+  UP.formConfigured = function () { return !!formEndpoint(); };
+
+  /* Spam trap. Bots fill in every field they find, so a field a human never
+     sees arriving with a value is a reliable bot signal. Kept off-screen
+     rather than display:none, because many bots skip hidden inputs, and
+     hidden from assistive tech so it is never announced or focused. */
+  function addHoneypot(form) {
+    if (form.querySelector('[data-honeypot]')) return;
+    var name = FORM.provider === 'formspree' ? '_gotcha' : 'botcheck';
+    var el = document.createElement('input');
+    el.type = FORM.provider === 'formspree' ? 'text' : 'checkbox';
+    el.name = name;
+    el.className = 'sr-only';
+    el.tabIndex = -1;
+    el.setAttribute('autocomplete', 'off');
+    el.setAttribute('aria-hidden', 'true');
+    el.setAttribute('data-honeypot', '');
+    form.appendChild(el);
+  }
+
+  /* One send path for every lead on the site, so the contact form, the
+     viewing request and the appraisal wizard all behave identically.
+     Resolves true on success, false on failure, and null when no key is
+     configured yet. */
+  UP.submitLead = function (fields, opts) {
+    var url = formEndpoint();
+    if (!url) return Promise.resolve(null);
+
+    var o = opts || {};
+    var body = {};
+    Object.keys(fields).forEach(function (k) { body[k] = fields[k]; });
+
+    body.source_page = window.location.pathname.split('/').pop() || 'index.html';
+    var subject = o.subject || 'upbss website — new enquiry';
+
+    if (FORM.provider === 'web3forms') {
+      body.access_key = FORM.key;
+      body.subject = subject;
+      if (fields.name) body.from_name = fields.name;
+      if (fields.email) body.replyto = fields.email;
+    } else if (FORM.provider === 'formspree') {
+      body._subject = subject;
+      if (fields.email) body._replyto = fields.email;
+    } else {
+      body.subject = subject;
+    }
+
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function (r) {
+      if (!r.ok) console.warn('upbss: form provider returned ' + r.status);
+      return r.ok;
+    }).catch(function (e) {
+      console.warn('upbss: form submission failed', e);
+      return false;
+    });
+  };
 
   function fieldOf(input) { return input.closest('.field') || input.closest('.checkbox'); }
 
@@ -468,6 +573,9 @@
          way: inline, next to the field, with a recovery hint. */
       form.setAttribute('novalidate', '');
       var fields = [].slice.call(form.querySelectorAll('input, select, textarea'));
+      /* Added after `fields` is read, so the trap is submitted but never
+         validated or focused as part of the real form. */
+      addHoneypot(form);
 
       fields.forEach(function (input) {
         input.addEventListener('blur', function () { if (input.value || input.required) validate(input); });
@@ -512,12 +620,15 @@
           status.focus && status.focus();
         };
 
-        if (FORM_ENDPOINT) {
-          fetch(FORM_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(Object.fromEntries(new FormData(form)))
-          }).then(function (r) { done(r.ok); }).catch(function () { done(false); });
+        if (UP.formConfigured()) {
+          var payload = Object.fromEntries(new FormData(form));
+          /* A ticked consent box arrives as 'on'; send a real boolean. */
+          if (form.elements.consent) payload.consent = !!form.elements.consent.checked;
+          UP.submitLead(payload, {
+            subject: form.dataset.subject ||
+              ('upbss website — ' + (payload.interest || 'enquiry') +
+               (payload.ref ? ' (ref ' + payload.ref + ')' : ''))
+          }).then(function (ok) { done(ok); });
         } else {
           setTimeout(function () { done(true); }, 700);
         }
