@@ -1,0 +1,24 @@
+# Netlify configuration for the upbss site.
+#
+# The site is a plain static build with no bundler, so there is nothing to
+# compile — Netlify only needs to know which folder to serve.
+#
+# `publish` points at main_files/ because that is where the current site lives.
+# Without this, Netlify would serve the repository root and visitors would see
+# a directory listing (or the prototype) instead of the site.
+
+[build]
+  publish = "main_files"
+  command = ""
+
+# 404.html in the publish directory is picked up automatically by Netlify,
+# so the site's own error page is used rather than a generic one.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Basic hardening. Safe for this site: it loads no framed content and no
+    # third-party scripts beyond Google Fonts.
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
