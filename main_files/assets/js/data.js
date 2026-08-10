@@ -13,12 +13,12 @@ window.UPBSS = window.UPBSS || {};
 
 UPBSS.config = {
   name: 'upbss',
-  email: 'zoha3652@gmail.com',
+  email: 'customerservice@upbss.com',
   /* A real, live mobile number — not a demo placeholder. Anyone who calls or
      texts it reaches a person. Keep `phone` and `phoneHref` in step: `phone`
      is what visitors read, `phoneHref` is what the tel: link dials. */
-  phone: '+44 7958 145889',
-  phoneHref: '+447958145889',
+  phone: '+44 7988 313898',
+  phoneHref: '+447988313898',
   address: ['upbss Property Group', '[registered office address]', 'Edinburgh', 'Scotland'],
   hours: 'Mon–Fri 09:00–18:00 · Sat 10:00–14:00',
   currency: '£',

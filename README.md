@@ -72,24 +72,51 @@ Supabase schema, so switching to live data means replacing the arrays with a
 
 Carried deliberately — this is a demo awaiting real data.
 
-- **Forms do not submit.** `FORM_ENDPOINT` in `main.js` is `null`, so every
-  form simulates success after a short delay. Enquiry capture is a core
-  requirement of the brief and is not functional in this build.
+- **Forms send, but only from a real host.** The contact form, viewing request
+  and appraisal wizard all post through `UP.submitLead()` in `main.js` to
+  Web3Forms. They cannot work from `file://` — a page opened from disk has no
+  origin, so the request is refused. Serve over `http://` to test.
+- **The mailbox does not exist yet.** The site shows
+  `customerservice@upbss.com`, but the Web3Forms key is registered to a
+  different address, so submissions currently arrive there. Create the mailbox
+  in cPanel, then either re-register or switch to the PHP route below.
 - **The Supabase variant ships with empty credentials.** `SUPABASE_URL` and
   `SUPABASE_ANON_KEY` are blank, so it falls back to the static arrays. It is
   otherwise complete: listings load from Postgres, and the enquiry and
   appraisal forms insert real rows.
-- **Contact details are placeholders** — `+43 732 000 000`, `hello@upbss.com`,
-  and `#` social links.
+- **Company details are placeholders.** 23 bracketed fields across the legal
+  pages — `[SC company number]`, `[registered office address]`,
+  `[redress scheme]`, VAT, ICO and HMRC numbers. Social links are still `#`.
+- **Listing photography is stock.** All 30 images are Pexels placeholders. They
+  must be replaced with the seller's own photographs before any real listing is
+  published: showing a different building is a misleading action under the
+  Consumer Protection from Unfair Trading Regulations 2008. See
+  `main_files/assets/img/CREDITS.md`.
 - **Legal pages are drafts.** Privacy, terms, cookies, complaints and
   accessibility all carry a visible banner saying they need a lawyer's review.
   Do not go live on them.
 
-### One to resolve with the client
+### Hosting and the back end
 
-The brief specifies **MS SQL**. The working schema is **PostgreSQL** (Supabase),
-and uses Postgres-specific features — `text[]`, `generated always as identity`,
-row-level security policies. Worth confirming before more is built on it.
+The client has hosting on 123reg with cPanel, and the domain is **upbss.com**.
+cPanel means Apache and PHP, which changes the sensible answer for the forms:
+a PHP handler on the same server is unlimited, costs nothing extra, sends from
+`customerservice@upbss.com` rather than a third party, and removes a data
+processor from the privacy policy. Switching to it is two lines in `main.js`:
+
+```js
+provider: 'custom',
+endpoint: '/api/enquiry.php',
+```
+
+Deploy note: upload the **contents** of `main_files/` into `public_html/`, not
+the folder itself, or the site lands at `upbss.com/main_files/`.
+
+Still to settle: the brief specifies **MS SQL**, while the only working schema
+is **PostgreSQL** (Supabase), using Postgres-specific features — `text[]`,
+`generated always as identity`, row-level security. Standard cPanel hosting
+offers MySQL/MariaDB rather than either, so whichever way this goes the schema
+needs porting. Worth agreeing before more is built on it.
 
 ## Repository layout
 

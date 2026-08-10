@@ -441,7 +441,7 @@
     provider: 'web3forms',      /* 'web3forms' | 'formspree' | 'custom' */
     key: '9bffaae2-619e-42c5-b4c4-c9f49241500c', /* Web3Forms access key */
     endpoint: '',               /* only used when provider is 'custom' */
-    destination: 'zoha3652@gmail.com' /* for your reference — the provider holds the real address */
+    destination: 'customerservice@upbss.com' /* for your reference — the provider holds the real address */
   };
 
   function formEndpoint() {
