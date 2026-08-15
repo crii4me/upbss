@@ -72,14 +72,20 @@ Supabase schema, so switching to live data means replacing the arrays with a
 
 Carried deliberately — this is a demo awaiting real data.
 
-- **Forms send, but only from a real host.** The contact form, viewing request
+- **Forms work, but only from a real host.** The contact form, viewing request
   and appraisal wizard all post through `UP.submitLead()` in `main.js` to
-  Web3Forms. They cannot work from `file://` — a page opened from disk has no
-  origin, so the request is refused. Serve over `http://` to test.
-- **The mailbox does not exist yet.** The site shows
-  `customerservice@upbss.com`, but the Web3Forms key is registered to a
-  different address, so submissions currently arrive there. Create the mailbox
-  in cPanel, then either re-register or switch to the PHP route below.
+  `api/enquiry.php` on the same server, which emails
+  `customerservice@upbss.com`. They cannot work from `file://` — a page opened
+  from disk has no origin, so the request is refused. Serve over `http://` to
+  test. Verified working on the live site.
+- **No SSL certificate.** The site serves a self-signed certificate, so
+  browsers warn. 123reg appear to have disabled cPanel AutoSSL in favour of a
+  paid product; free alternatives are Let's Encrypt via their support, or
+  Cloudflare. Must be resolved before real customers use the forms.
+- **Mail routing is worth checking.** The MX records for upbss.com point at
+  GoDaddy (`smtp.secureserver.net`), not the cPanel server, so mail addressed
+  to the domain does not necessarily reach the cPanel mailbox. If enquiries
+  stop arriving, that is the first thing to look at — cPanel → Email Routing.
 - **The Supabase variant ships with empty credentials.** `SUPABASE_URL` and
   `SUPABASE_ANON_KEY` are blank, so it falls back to the static arrays. It is
   otherwise complete: listings load from Postgres, and the enquiry and

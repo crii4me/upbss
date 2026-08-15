@@ -7,6 +7,11 @@ desktop.ini
 # so committing the zip as well would just duplicate it in history.
 main_files.zip
 
+# Build artifact: the upload bundle for cPanel's File Manager. Regenerated
+# from main_files/ whenever it is needed, so there is no value in versioning
+# 7 MB of duplicated content.
+upbss-website-upload.zip
+
 # Local Claude Code settings (machine-specific paths, not shared config).
 # Leading **/ so this matches at any depth, not just the repo root.
 **/.claude/settings.local.json

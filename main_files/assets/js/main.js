@@ -438,10 +438,14 @@
      send mail as you. */
 
   var FORM = {
-    provider: 'web3forms',      /* 'web3forms' | 'formspree' | 'custom' */
-    key: '9bffaae2-619e-42c5-b4c4-c9f49241500c', /* Web3Forms access key */
-    endpoint: '',               /* only used when provider is 'custom' */
-    destination: 'customerservice@upbss.com' /* for your reference — the provider holds the real address */
+    /* Enquiries are handled by our own PHP script on the same server, so there
+       is no third-party form service, no monthly submission cap, and the mail
+       is sent from the site's own domain rather than someone else's.
+       The delivery address is set in api/enquiry.php, not here. */
+    provider: 'custom',
+    endpoint: '/api/enquiry.php',
+    key: '',                    /* unused for 'custom' — kept for easy switching back */
+    destination: 'customerservice@upbss.com'
   };
 
   function formEndpoint() {
