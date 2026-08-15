@@ -97,8 +97,8 @@ if ($name === '' || $email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL))
 
 /* ---------- Compose ------------------------------------------------------ */
 
-$subject = header_safe($data['subject'] ?? 'upbss website enquiry');
-if ($subject === '') { $subject = 'upbss website enquiry'; }
+$subject = header_safe($data['subject'] ?? 'UPBSS website enquiry');
+if ($subject === '') { $subject = 'UPBSS website enquiry'; }
 
 /* Everything that is not routing metadata goes into the body, so a new field
    added to a form later still appears in the email without touching this file. */
@@ -112,7 +112,7 @@ foreach ($data as $field => $value) {
     $lines[] = $label . ': ' . str_replace(["\r\n", "\r"], "\n", (string) $value);
 }
 
-$body  = "New enquiry from the upbss website\n";
+$body  = "New enquiry from the UPBSS website\n";
 $body .= str_repeat('=', 42) . "\n\n";
 $body .= implode("\n", $lines) . "\n\n";
 $body .= str_repeat('-', 42) . "\n";
@@ -121,7 +121,7 @@ $body .= 'IP address: ' . $ip . "\n";
 $body .= 'Page: ' . header_safe($data['source_page'] ?? 'unknown') . "\n";
 
 $headers = [
-    'From: upbss website <' . $FROM . '>',
+    'From: UPBSS website <' . $FROM . '>',
     'Reply-To: ' . $name . ' <' . $email . '>',
     'Content-Type: text/plain; charset=UTF-8',
     'X-Mailer: upbss-site',

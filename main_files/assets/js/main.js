@@ -489,7 +489,7 @@
     Object.keys(fields).forEach(function (k) { body[k] = fields[k]; });
 
     body.source_page = window.location.pathname.split('/').pop() || 'index.html';
-    var subject = o.subject || 'upbss website — new enquiry';
+    var subject = o.subject || 'UPBSS website — new enquiry';
 
     if (FORM.provider === 'web3forms') {
       body.access_key = FORM.key;
@@ -630,7 +630,7 @@
           if (form.elements.consent) payload.consent = !!form.elements.consent.checked;
           UP.submitLead(payload, {
             subject: form.dataset.subject ||
-              ('upbss website — ' + (payload.interest || 'enquiry') +
+              ('UPBSS website — ' + (payload.interest || 'enquiry') +
                (payload.ref ? ' (ref ' + payload.ref + ')' : ''))
           }).then(function (ok) { done(ok); });
         } else {

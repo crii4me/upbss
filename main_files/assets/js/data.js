@@ -19,7 +19,7 @@ UPBSS.config = {
      is what visitors read, `phoneHref` is what the tel: link dials. */
   phone: '+44 7988 313898',
   phoneHref: '+447988313898',
-  address: ['upbss Property Group', '[registered office address]', 'Edinburgh', 'Scotland'],
+  address: ['UPBSS Property Group', '[registered office address]', 'Edinburgh', 'Scotland'],
   hours: 'Mon–Fri 09:00–18:00 · Sat 10:00–14:00',
   currency: '£',
   perPage: 9

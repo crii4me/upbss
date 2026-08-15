@@ -103,7 +103,7 @@
           estimate_high: high,
           estimate_shown: u.money(low) + ' – ' + u.money(high),
           consent: !!document.getElementById('aConsent').checked
-        }, { subject: 'upbss — instant appraisal lead' }).then(function (ok) {
+        }, { subject: 'UPBSS — instant appraisal lead' }).then(function (ok) {
           if (ok === false) console.warn('upbss: appraisal lead was not delivered.');
         });
       }
