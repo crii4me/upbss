@@ -12,7 +12,7 @@
 window.UPBSS = window.UPBSS || {};
 
 UPBSS.config = {
-  name: 'upbss',
+  name: 'UPBSS',
   email: 'customerservice@upbss.com',
   /* A real, live mobile number — not a demo placeholder. Anyone who calls or
      texts it reaches a person. Keep `phone` and `phoneHref` in step: `phone`
@@ -25,7 +25,17 @@ UPBSS.config = {
   perPage: 9
 };
 
-UPBSS.propertyTypes = ['Flat', 'House', 'Townhouse', 'Studio', 'Commercial', 'Land'];
+/* Two levels: the category chosen on the search page decides which types are
+   offered. Land sits under Commercial only â€” a development site is bought as
+   a venture rather than as somewhere to live. */
+UPBSS.categories = {
+  Residential: ['Flat', 'Studio', 'House'],
+  Commercial: ['Business', 'Land']
+};
+
+/* Flat list of every type, for the places that have no category step: the
+   appraisal wizard and the sold-archive filter. */
+UPBSS.propertyTypes = ['Flat', 'Studio', 'House', 'Business', 'Land'];
 
 UPBSS.locations = [
   'New Town', 'Old Town', 'Stockbridge', 'Morningside', 'Newington',
@@ -35,7 +45,7 @@ UPBSS.locations = [
 /* status: 'available' | 'under-offer' | 'sold' */
 UPBSS.properties = [
   {
-    ref: 'UP2291', title: 'Shore-side flat with double balcony', type: 'Flat',
+    ref: 'UP2291', title: 'Shore-side flat with double balcony', category: 'Residential', type: 'Flat',
     location: 'Leith', region: 'City of Edinburgh', price: 385000, beds: 3, baths: 2, area: 96,
     year: 2016, epc: 'B', tenure: 'Heritable', status: 'available', featured: true, scene: 'tower', seed: 3,
     summary: 'A bright third-floor flat a minute from The Shore, with two balconies, a fitted kitchen and a secure parking space included in the price.',
@@ -43,7 +53,7 @@ UPBSS.properties = [
     features: ['Two south-facing balconies', 'Secure underground parking', 'Fitted Bosch kitchen', 'Lift to all floors', 'Storage cellar', 'Factored development']
   },
   {
-    ref: 'UP2288', title: 'Detached villa with mature garden', type: 'House',
+    ref: 'UP2288', title: 'Detached villa with mature garden', category: 'Residential', type: 'House',
     location: 'Corstorphine', region: 'City of Edinburgh', price: 695000, beds: 5, baths: 3, area: 184,
     year: 1998, epc: 'C', tenure: 'Heritable', status: 'available', featured: true, scene: 'house', seed: 1,
     summary: 'Set back from the road on a 720 m² plot, this family villa offers five bedrooms, a converted attic studio and a double garage.',
@@ -51,7 +61,7 @@ UPBSS.properties = [
     features: ['720 m² south-facing garden', 'Double garage and workshop', 'Converted attic studio', 'Wood-burning stove', 'EV charging point', 'Fibre broadband']
   },
   {
-    ref: 'UP2284', title: 'Converted loft studio off the Royal Mile', type: 'Studio',
+    ref: 'UP2284', title: 'Converted loft studio off the Royal Mile', category: 'Residential', type: 'Studio',
     location: 'Old Town', region: 'City of Edinburgh', price: 295000, beds: 1, baths: 1, area: 54,
     year: 1912, epc: 'D', tenure: 'Heritable', status: 'available', featured: true, scene: 'loft', seed: 5,
     summary: 'Original beams, four-metre ceilings and a mezzanine sleeping platform, two minutes from the Royal Mile.',
@@ -59,7 +69,7 @@ UPBSS.properties = [
     features: ['Exposed original beams', '4 m ceiling height', 'Mezzanine platform', 'Two minutes to the Royal Mile', 'Communal roof terrace', 'Bike store']
   },
   {
-    ref: 'UP2279', title: 'Ground-floor retail unit on Morningside Road', type: 'Commercial',
+    ref: 'UP2279', title: 'Ground-floor retail unit on Morningside Road', category: 'Commercial', type: 'Business',
     location: 'Morningside', region: 'City of Edinburgh', price: 495000, beds: 0, baths: 2, area: 140,
     year: 1975, epc: 'C', tenure: 'Heritable', status: 'under-offer', featured: false, scene: 'shop', seed: 2,
     summary: 'A 140 m² retail unit with 9 m of frontage onto Morningside Road, currently let to a bakery on a rolling lease.',
@@ -67,7 +77,7 @@ UPBSS.properties = [
     features: ['9 m glazed frontage', 'Tenant in situ', 'Rear delivery access', 'Air conditioning', 'Basement stock room', 'Class 1 retail use']
   },
   {
-    ref: 'UP2275', title: 'Two-bed flat with Arthur’s Seat views', type: 'Flat',
+    ref: 'UP2275', title: 'Two-bed flat with Arthur’s Seat views', category: 'Residential', type: 'Flat',
     location: 'Newington', region: 'City of Edinburgh', price: 365000, beds: 2, baths: 1, area: 71,
     year: 2009, epc: 'B', tenure: 'Heritable', status: 'available', featured: false, scene: 'tower', seed: 7,
     summary: 'A quiet top-floor flat looking across to Arthur’s Seat, sold with a residents’ parking permit and a large storage cellar.',
@@ -75,7 +85,7 @@ UPBSS.properties = [
     features: ['Top floor, no overlooking', 'Arthur’s Seat views', 'Residents’ parking zone', 'Triple glazing', 'Shared drying green', 'Ten minutes to the Meadows']
   },
   {
-    ref: 'UP2270', title: 'Georgian townhouse in the New Town', type: 'Townhouse',
+    ref: 'UP2270', title: 'Georgian townhouse in the New Town', category: 'Residential', type: 'House',
     location: 'New Town', region: 'City of Edinburgh', price: 1150000, beds: 4, baths: 3, area: 210,
     year: 1815, epc: 'D', tenure: 'Heritable', status: 'available', featured: true, scene: 'terrace', seed: 4,
     summary: 'Four floors of Georgian detail with a private garden flat below, restored sash and case windows and a key to the residents’ gardens.',
@@ -83,7 +93,7 @@ UPBSS.properties = [
     features: ['Four storeys plus basement', 'Residents’ garden key', 'Restored sash and case windows', 'Separate garden flat', 'Original cornicing', 'A-listed façade']
   },
   {
-    ref: 'UP2266', title: 'New-build flat, EPC band A', type: 'Flat',
+    ref: 'UP2266', title: 'New-build flat, EPC band A', category: 'Residential', type: 'Flat',
     location: 'Leith', region: 'City of Edinburgh', price: 315000, beds: 2, baths: 1, area: 68,
     year: 2024, epc: 'A', tenure: 'Heritable', status: 'available', featured: false, scene: 'tower', seed: 9,
     summary: 'Completed in 2024 with underfloor heating, an air-source heat pump and a ten-year structural warranty still in place.',
@@ -91,7 +101,7 @@ UPBSS.properties = [
     features: ['EPC band A', 'Air-source heat pump', 'Underfloor heating', '10-year warranty', 'Video entry system', 'Private terrace']
   },
   {
-    ref: 'UP2261', title: 'Building plot with permission in principle', type: 'Land',
+    ref: 'UP2261', title: 'Building plot with permission in principle', category: 'Commercial', type: 'Land',
     location: 'Dalkeith', region: 'Midlothian', price: 175000, beds: 0, baths: 0, area: 640,
     year: null, epc: '—', tenure: 'Heritable', status: 'available', featured: false, scene: 'land', seed: 6,
     summary: 'A level 640 m² plot with planning permission in principle for a single dwelling, services already at the boundary.',
@@ -99,7 +109,7 @@ UPBSS.properties = [
     features: ['Planning permission in principle', 'Services at boundary', 'Level, cleared site', 'No overhead lines', 'Quiet cul-de-sac', 'Adopted road access']
   },
   {
-    ref: 'UP2257', title: 'Warehouse and office unit, business park', type: 'Commercial',
+    ref: 'UP2257', title: 'Warehouse and office unit, business park', category: 'Commercial', type: 'Business',
     location: 'Musselburgh', region: 'East Lothian', price: 720000, beds: 0, baths: 3, area: 520,
     year: 2005, epc: 'C', tenure: 'Heritable', status: 'available', featured: false, scene: 'shop', seed: 8,
     summary: 'A 520 m² unit combining warehouse space with a first-floor office suite and eight parking spaces.',
@@ -107,7 +117,7 @@ UPBSS.properties = [
     features: ['6 m clear internal height', 'Roller shutter loading', 'First-floor office suite', 'Eight parking spaces', 'Three-phase power', '24-hour site access']
   },
   {
-    ref: 'UP2250', title: 'Refurbished tenement flat near the university', type: 'Flat',
+    ref: 'UP2250', title: 'Refurbished tenement flat near the university', category: 'Residential', type: 'Flat',
     location: 'Newington', region: 'City of Edinburgh', price: 285000, beds: 2, baths: 1, area: 62,
     year: 1895, epc: 'C', tenure: 'Heritable', status: 'available', featured: false, scene: 'tower', seed: 11,
     summary: 'Fully refurbished in 2023 and currently let at £1,250 per month — a ready-made rental investment with a tenant in place.',
@@ -115,7 +125,7 @@ UPBSS.properties = [
     features: ['Refurbished 2023', 'Tenanted at £1,250 pcm', 'Ten minutes to King’s Buildings', 'New bathroom', 'Shared rear garden', 'Bus routes at the door']
   },
   {
-    ref: 'UP2244', title: 'Cottage with steading conversion potential', type: 'House',
+    ref: 'UP2244', title: 'Cottage with steading conversion potential', category: 'Residential', type: 'House',
     location: 'Dalkeith', region: 'Midlothian', price: 395000, beds: 4, baths: 2, area: 156,
     year: 1954, epc: 'E', tenure: 'Heritable', status: 'available', featured: false, scene: 'house', seed: 12,
     summary: 'A traditional cottage with an attached stone steading, ripe for conversion subject to the usual consents.',
@@ -123,7 +133,7 @@ UPBSS.properties = [
     features: ['Attached stone steading', 'Conversion potential', 'Orchard to the rear', 'Original range', 'Private water supply', 'Village centre']
   },
   {
-    ref: 'UP2239', title: 'Corner studio with roof terrace', type: 'Studio',
+    ref: 'UP2239', title: 'Corner studio with roof terrace', category: 'Residential', type: 'Studio',
     location: 'Leith', region: 'City of Edinburgh', price: 325000, beds: 1, baths: 1, area: 48,
     year: 2019, epc: 'B', tenure: 'Heritable', status: 'under-offer', featured: false, scene: 'loft', seed: 14,
     summary: 'A compact corner studio on the top floor, sold with an 18 m² private roof terrace and a lift to the door.',
@@ -131,7 +141,7 @@ UPBSS.properties = [
     features: ['18 m² roof terrace', 'Corner aspect, dual light', 'Lift to the door', 'Built-in storage wall', 'Concierge service', 'Bike store']
   },
   {
-    ref: 'UP2233', title: 'Detached villa with indoor pool', type: 'House',
+    ref: 'UP2233', title: 'Detached villa with indoor pool', category: 'Residential', type: 'House',
     location: 'Morningside', region: 'City of Edinburgh', price: 1450000, beds: 6, baths: 4, area: 320,
     year: 2011, epc: 'B', tenure: 'Heritable', status: 'available', featured: true, scene: 'house', seed: 15,
     summary: 'Six bedrooms, a heated indoor pool and a triple garage on a landscaped 1,400 m² plot with views to the Pentlands.',
@@ -139,7 +149,7 @@ UPBSS.properties = [
     features: ['Heated indoor pool', '1,400 m² landscaped garden', 'Triple garage', 'Guest suite', 'Home cinema room', 'Solar PV array']
   },
   {
-    ref: 'UP2228', title: 'Mixed-use building, five flats', type: 'Commercial',
+    ref: 'UP2228', title: 'Mixed-use building, five flats', category: 'Commercial', type: 'Business',
     location: 'Leith', region: 'City of Edinburgh', price: 1290000, beds: 11, baths: 6, area: 610,
     year: 1962, epc: 'D', tenure: 'Heritable', status: 'available', featured: false, scene: 'terrace', seed: 17,
     summary: 'Five let flats over a ground-floor commercial unit, producing £74,000 gross per year.',
@@ -147,7 +157,7 @@ UPBSS.properties = [
     features: ['£74,000 gross income', 'Five let flats', 'Ground-floor commercial', 'New roof 2021', 'Separate meters', 'Rear parking court']
   },
   {
-    ref: 'UP2221', title: 'One-bed flat a short walk from the beach', type: 'Flat',
+    ref: 'UP2221', title: 'One-bed flat a short walk from the beach', category: 'Residential', type: 'Flat',
     location: 'Portobello', region: 'City of Edinburgh', price: 245000, beds: 1, baths: 1, area: 44,
     year: 1996, epc: 'C', tenure: 'Heritable', status: 'available', featured: false, scene: 'tower', seed: 19,
     summary: 'Three hundred metres from Portobello beach and the promenade, with a shared drying green and a permit parking bay.',
@@ -155,7 +165,7 @@ UPBSS.properties = [
     features: ['300 m from the beach', 'Sea glimpses from the lounge', 'Short-term let potential, subject to licence', 'Furnished as seen', 'Permit parking zone', 'Storage cellar']
   },
   {
-    ref: 'UP2215', title: 'Steading conversion with paddock', type: 'House',
+    ref: 'UP2215', title: 'Steading conversion with paddock', category: 'Residential', type: 'House',
     location: 'Dalkeith', region: 'Midlothian', price: 565000, beds: 4, baths: 3, area: 198,
     year: 2018, epc: 'B', tenure: 'Heritable', status: 'available', featured: false, scene: 'house', seed: 21,
     summary: 'A completed steading conversion with a vaulted living room, underfloor heating throughout and a 0.4 hectare paddock.',
@@ -163,7 +173,7 @@ UPBSS.properties = [
     features: ['Vaulted living room', '0.4 ha paddock', 'Underfloor heating', 'Stables and tack room', 'Air-source heat pump', 'Private drive']
   },
   {
-    ref: 'UP2208', title: 'City-centre office floor', type: 'Commercial',
+    ref: 'UP2208', title: 'City-centre office floor', category: 'Commercial', type: 'Business',
     location: 'New Town', region: 'City of Edinburgh', price: 985000, beds: 0, baths: 4, area: 340,
     year: 1988, epc: 'C', tenure: 'Heritable', status: 'available', featured: false, scene: 'shop', seed: 23,
     summary: 'A whole third floor of 340 m², open plan with four meeting rooms, sold with vacant possession.',
@@ -171,7 +181,7 @@ UPBSS.properties = [
     features: ['Whole floor, open plan', 'Four meeting rooms', 'Vacant possession', 'Raised access floors', 'Two passenger lifts', 'Tram stop at the door']
   },
   {
-    ref: 'UP2202', title: 'Colony house with front and rear gardens', type: 'Townhouse',
+    ref: 'UP2202', title: 'Colony house with front and rear gardens', category: 'Residential', type: 'House',
     location: 'Stockbridge', region: 'City of Edinburgh', price: 585000, beds: 3, baths: 2, area: 110,
     year: 1866, epc: 'D', tenure: 'Heritable', status: 'available', featured: false, scene: 'terrace', seed: 25,
     summary: 'A classic Stockbridge colony house over two floors, with gardens front and back and the Water of Leith walkway at the end of the street.',
@@ -179,7 +189,7 @@ UPBSS.properties = [
     features: ['Front and rear gardens', 'Original external stone stair', 'Restored sash windows', 'Gas central heating', 'Residents’ parking', 'Roof recently relined']
   },
   {
-    ref: 'UP2196', title: 'Main door flat with private garden', type: 'Flat',
+    ref: 'UP2196', title: 'Main door flat with private garden', category: 'Residential', type: 'Flat',
     location: 'Stockbridge', region: 'City of Edinburgh', price: 495000, beds: 2, baths: 2, area: 78,
     year: 1898, epc: 'C', tenure: 'Heritable', status: 'available', featured: false, scene: 'tower', seed: 27,
     summary: 'A main door flat with its own front door and private garden, retaining original cornicing and shutters throughout.',
@@ -187,7 +197,7 @@ UPBSS.properties = [
     features: ['Main door access', 'Private front garden', 'Original cornicing and shutters', 'Two double bedrooms', 'Cellar store', 'Water of Leith walkway nearby']
   },
   {
-    ref: 'UP2190', title: 'Development site, edge of town', type: 'Land',
+    ref: 'UP2190', title: 'Development site, edge of town', category: 'Commercial', type: 'Land',
     location: 'Musselburgh', region: 'East Lothian', price: 380000, beds: 0, baths: 0, area: 1450,
     year: null, epc: '—', tenure: 'Heritable', status: 'available', featured: false, scene: 'land', seed: 29,
     summary: 'A 1,450 m² site allocated for housing in the local development plan, with a pre-application response for four homes.',
@@ -197,15 +207,15 @@ UPBSS.properties = [
 ];
 
 UPBSS.sold = [
-  { ref: 'UP2103', title: 'Three-bed flat with Shore views', location: 'Leith', type: 'Flat', price: 402000, weeks: 5, year: 2026 },
-  { ref: 'UP2088', title: 'Semi-detached villa with garden', location: 'Corstorphine', type: 'House', price: 468000, weeks: 7, year: 2026 },
-  { ref: 'UP2071', title: 'Retail unit, Morningside Road', location: 'Morningside', type: 'Commercial', price: 610000, weeks: 12, year: 2026 },
-  { ref: 'UP2064', title: 'Studio near the Meadows', location: 'Newington', type: 'Studio', price: 249000, weeks: 3, year: 2026 },
-  { ref: 'UP2050', title: 'Detached villa with two annexes', location: 'Morningside', type: 'House', price: 1340000, weeks: 16, year: 2025 },
-  { ref: 'UP2039', title: 'Georgian townhouse, New Town', location: 'New Town', type: 'Townhouse', price: 1195000, weeks: 9, year: 2025 },
-  { ref: 'UP2027', title: 'Two-bed with sea views', location: 'Portobello', type: 'Flat', price: 284000, weeks: 6, year: 2025 },
-  { ref: 'UP2014', title: 'Warehouse unit, business park', location: 'Musselburgh', type: 'Commercial', price: 540000, weeks: 14, year: 2025 },
-  { ref: 'UP1998', title: 'Plot with permission in principle', location: 'Dalkeith', type: 'Land', price: 182000, weeks: 8, year: 2025 }
+  { ref: 'UP2103', title: 'Three-bed flat with Shore views', location: 'Leith', category: 'Residential', type: 'Flat', price: 402000, weeks: 5, year: 2026 },
+  { ref: 'UP2088', title: 'Semi-detached villa with garden', location: 'Corstorphine', category: 'Residential', type: 'House', price: 468000, weeks: 7, year: 2026 },
+  { ref: 'UP2071', title: 'Retail unit, Morningside Road', location: 'Morningside', category: 'Commercial', type: 'Business', price: 610000, weeks: 12, year: 2026 },
+  { ref: 'UP2064', title: 'Studio near the Meadows', location: 'Newington', category: 'Residential', type: 'Studio', price: 249000, weeks: 3, year: 2026 },
+  { ref: 'UP2050', title: 'Detached villa with two annexes', location: 'Morningside', category: 'Residential', type: 'House', price: 1340000, weeks: 16, year: 2025 },
+  { ref: 'UP2039', title: 'Georgian townhouse, New Town', location: 'New Town', category: 'Residential', type: 'House', price: 1195000, weeks: 9, year: 2025 },
+  { ref: 'UP2027', title: 'Two-bed with sea views', location: 'Portobello', category: 'Residential', type: 'Flat', price: 284000, weeks: 6, year: 2025 },
+  { ref: 'UP2014', title: 'Warehouse unit, business park', location: 'Musselburgh', category: 'Commercial', type: 'Business', price: 540000, weeks: 14, year: 2025 },
+  { ref: 'UP1998', title: 'Plot with permission in principle', location: 'Dalkeith', category: 'Commercial', type: 'Land', price: 182000, weeks: 8, year: 2025 }
 ];
 
 UPBSS.testimonials = [
@@ -527,9 +537,8 @@ UPBSS.guides = [
 UPBSS.appraisalFactors = {
   Flat: { base: 3600, condition: { excellent: 1.12, good: 1.0, fair: 0.9, refurb: 0.76 } },
   House: { base: 3400, condition: { excellent: 1.14, good: 1.0, fair: 0.88, refurb: 0.72 } },
-  Townhouse: { base: 3800, condition: { excellent: 1.13, good: 1.0, fair: 0.89, refurb: 0.74 } },
   Studio: { base: 4000, condition: { excellent: 1.1, good: 1.0, fair: 0.92, refurb: 0.8 } },
-  Commercial: { base: 1900, condition: { excellent: 1.1, good: 1.0, fair: 0.9, refurb: 0.78 } },
+  Business: { base: 1900, condition: { excellent: 1.1, good: 1.0, fair: 0.9, refurb: 0.78 } },
   Land: { base: 260, condition: { excellent: 1.05, good: 1.0, fair: 0.95, refurb: 0.9 } }
 };
 

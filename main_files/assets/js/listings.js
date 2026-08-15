@@ -78,7 +78,7 @@
     var perPage = UP.config.perPage;
 
     /* Populate the selects from data so the options can never drift. */
-    fillSelect('fType', UP.propertyTypes, 'Any type');
+    fillSelect('fCategory', Object.keys(UP.categories), 'All property');
     fillSelect('fLocation', UP.locations.slice().sort(), 'Any location');
 
     function fillSelect(id, values, anyLabel) {
@@ -88,9 +88,45 @@
         values.map(function (v) { return '<option value="' + u.escape(v) + '">' + u.escape(v) + '</option>'; }).join('');
     }
 
+    /* The type list depends on the category: a residential search offers flats
+       and houses, a commercial one offers businesses and land. With no
+       category chosen there is nothing sensible to offer, so the whole field
+       is hidden rather than shown listing types from both worlds at once. */
+    var typeField = document.getElementById('typeField');
+    function syncTypes(keep) {
+      var cat = form.elements.category.value;
+      var sel = form.elements.type;
+      if (!cat) {
+        if (typeField) typeField.hidden = true;
+        sel.innerHTML = '<option value="">Any type</option>';
+        sel.value = '';
+        return;
+      }
+      var wanted = keep && (UP.categories[cat] || []).indexOf(keep) > -1 ? keep : '';
+      fillSelect('fType', UP.categories[cat] || [], 'Any ' + cat.toLowerCase() + ' type');
+      sel.value = wanted;
+      if (typeField) typeField.hidden = false;
+    }
+
+    /* Which category a type belongs to. Lets a link carry just ?type=Flat and
+       still work — the homepage shortcuts do exactly that. */
+    function categoryOf(type) {
+      var found = '';
+      Object.keys(UP.categories).forEach(function (cat) {
+        if (UP.categories[cat].indexOf(type) > -1) found = cat;
+      });
+      return found;
+    }
+
     function readURL() {
       var q = new URLSearchParams(window.location.search);
-      ['type', 'location', 'min', 'max', 'beds', 'q'].forEach(function (k) {
+      /* Category first: the type options do not exist until it is set. A link
+         giving only a type has its category inferred, so old-style shortcuts
+         keep working instead of silently returning everything. */
+      var cat = q.get('category') || categoryOf(q.get('type') || '');
+      if (cat) form.elements.category.value = cat;
+      syncTypes(q.get('type') || '');
+      ['location', 'min', 'max', 'beds'].forEach(function (k) {
         var el = form.elements[k];
         if (el && q.get(k)) el.value = q.get(k);
       });
@@ -100,12 +136,12 @@
 
     function state() {
       return {
+        category: form.elements.category.value,
         type: form.elements.type.value,
         location: form.elements.location.value,
         min: form.elements.min.value,
         max: form.elements.max.value,
         beds: form.elements.beds.value,
-        q: form.elements.q.value.trim(),
         sort: sortSel ? sortSel.value : 'newest'
       };
     }
@@ -119,19 +155,14 @@
     }
 
     function filter(s) {
-      var needle = s.q.toLowerCase();
       return UP.properties.filter(function (p) {
         if (p.status === 'sold') return false;
+        if (s.category && p.category !== s.category) return false;
         if (s.type && p.type !== s.type) return false;
         if (s.location && p.location !== s.location) return false;
         if (s.min && p.price < Number(s.min)) return false;
         if (s.max && p.price > Number(s.max)) return false;
         if (s.beds && p.beds < Number(s.beds)) return false;
-        if (needle) {
-          var hay = (p.title + ' ' + p.summary + ' ' + p.location + ' ' + p.region + ' ' + p.ref + ' ' +
-            p.features.join(' ')).toLowerCase();
-          if (hay.indexOf(needle) === -1) return false;
-        }
         return true;
       });
     }
@@ -146,7 +177,8 @@
 
     function renderTags(s) {
       var labels = {
-        type: 'Type', location: 'Location', min: 'From', max: 'Up to', beds: 'Min beds', q: 'Keyword'
+        category: 'Category', type: 'Type', location: 'Location',
+        min: 'From', max: 'Up to', beds: 'Min beds'
       };
       var parts = Object.keys(labels).filter(function (k) { return s[k]; }).map(function (k) {
         var val = (k === 'min' || k === 'max') ? u.money(Number(s[k])) : s[k];
@@ -210,19 +242,27 @@
 
     form.addEventListener('submit', function (e) { e.preventDefault(); page = 1; render(true); });
     form.addEventListener('change', function () { page = 1; render(false); });
-    form.elements.q.addEventListener('input', u.debounce(function () { page = 1; render(false); }, 300));
+    /* Rebuilds the type list when the category changes. This runs before the
+       form-level handler above regardless of registration order: the event
+       fires on the select itself first, and only then bubbles to the form. */
+    form.elements.category.addEventListener('change', function () { syncTypes(''); });
     if (sortSel) sortSel.addEventListener('change', function () { page = 1; render(false); });
 
     tags.addEventListener('click', function (e) {
       var b = e.target.closest('[data-clear]');
       if (!b) return;
       form.elements[b.dataset.clear].value = '';
+      /* Clearing the category leaves any chosen type orphaned. */
+      if (b.dataset.clear === 'category') syncTypes('');
       page = 1;
       render(false);
     });
 
     reset.addEventListener('click', function () {
       form.reset();
+      /* form.reset() restores the select's original options, which for the
+         type field were built at runtime — so rebuild and hide it again. */
+      syncTypes('');
       if (sortSel) sortSel.value = 'newest';
       page = 1;
       render(false);
